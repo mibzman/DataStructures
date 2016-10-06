@@ -1,4 +1,5 @@
 #include <stack>
+#include <iostream>
 
 template<typename T>
 struct Node {
@@ -125,7 +126,7 @@ struct Tree { //the non-balanced tree
 		bool DidGoLeft;
 		while(p) {
 			ThisParent = p;
-			if (p->Value >= val) {
+			if (val >=p->Value) {
 				p = p->Right;
 				DidGoLeft = false; //I'm not entirely happy with this
 			}else {
@@ -133,8 +134,7 @@ struct Tree { //the non-balanced tree
 				DidGoLeft = true;
 			}	
 		}
-		Node<T>* temp =  new Node<T>(val, nullptr, nullptr, ThisParent);
-		Node<T>* newNode = temp;
+		Node<T>* newNode =  new Node<T>(val, nullptr, nullptr, ThisParent);
 		if (DidGoLeft){
 			ThisParent->Left = newNode;
 		}else{
@@ -182,6 +182,33 @@ struct Tree { //the non-balanced tree
 			p = p->Left;
 		}
 		return output;
+	}
+
+	void print(){
+		std::cout << "digraph G {" << std::endl;
+		Node<T>* n;
+                std::stack<Node<T>*> Stack;
+
+                Stack.push(Head);
+                while(!Stack.empty()){
+                        n = Stack.top();
+                        //do visit
+			
+			if (!n->Parent){
+				std::cout << "HEAD" << "->" << n->Value << ";" << std::endl;
+			}else{
+				std::cout << n->Parent->Value << "->" << n->Value << ";" << std::endl;  
+			}
+
+                        Stack.pop();
+                        if (n->Right){
+                                Stack.push(n->Right);
+                        }
+                        if (n->Left){
+                                Stack.push(n->Left);
+                        }
+                }
+		std::cout << "}";
 	}
 
 

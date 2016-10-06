@@ -7,6 +7,10 @@ void TestInsert(){
 	t->insert(25);
 	t->insert(100);
 	t->insert(10);
+	
+//	t->print();
+
+	
 	if (t->Head->Value != 50){
 		std::cout << "insert failed";
 	}
@@ -23,6 +27,7 @@ void TestInsert(){
 
 int main(){
         TestInsert();
+	//std::cout << "test completed";
         return 0;
 }
 
