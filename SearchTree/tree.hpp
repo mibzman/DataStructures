@@ -30,28 +30,30 @@ struct Tree { //the non-balanced tree
 	Tree()
 	:Head(nullptr){}
 
-	Tree(Node<T>* n)
-	:Head(n){}
+	/*
+	Tree(T n){
+		Head = new Node<T>(n, nullptr, nullptr, nullptr);
+	}*/
 
 	 Tree(const Tree<T> & t){
-                if (t->Head == nullptr){
+                if (t.Head == nullptr){
 			Head = nullptr;
                         return;
                 }
 
-		Head = t->Head;
+		Head = t.Head;
 		Node<T>* r = Head;
                 Node<T>* n;
 		Node<T>* temp;
                 std::stack<Node<T>*> Stack;
 		std::stack<Node<T>*> twoChild;
 
-                Stack.push(t->Head);
+                Stack.push(t.Head);
                 while(!Stack.empty()){
                         n = Stack.top();
 			//do visit                        
 			//insert(n);
-			if (r->Value < n){
+			if (r->Value < n->Value){
 				r->Left = n;
 				temp = r->Left;
 			}else{
@@ -80,7 +82,7 @@ struct Tree { //the non-balanced tree
 
         }
 
-	Tree & operator=(const Tree & t){ //ugh, n^2log(n)).  not good
+	Tree & operator=(const Tree & t){
 		Node<T>* p = Head;
                 Node<T>* ThisParent;
                 while (p) {
@@ -104,9 +106,9 @@ struct Tree { //the non-balanced tree
 	Node<T>* find(T val) {
 		Node<T>* p = Head;
 		while(p) {
-                        if (p->Value > val) {
+                        if (val > p->Value) {
                                 p = p->Right;
-                        }else if (p->Value < val) {
+                        }else if (val < p->Value) {
                                 p = p->Left;
                         }else{
 				return p;
@@ -188,6 +190,7 @@ struct Tree { //the non-balanced tree
 		std::cout << "digraph G {" << std::endl;
 		Node<T>* n;
                 std::stack<Node<T>*> Stack;
+		int counter = 0;
 
                 Stack.push(Head);
                 while(!Stack.empty()){
@@ -199,6 +202,15 @@ struct Tree { //the non-balanced tree
 			}else{
 				std::cout << n->Parent->Value << "->" << n->Value << ";" << std::endl;  
 			}
+			if (!n->Left) {
+				std::cout << n->Value << "->" << "Leftnull" << counter << ";" << std::endl;
+			counter++;
+			}
+			if (!n->Right) {
+                                std::cout << n->Value << "->" << "Righttnull" << counter << ";" << std::endl;
+			counter++;
+                        }
+
 
                         Stack.pop();
                         if (n->Right){
@@ -207,7 +219,7 @@ struct Tree { //the non-balanced tree
                         if (n->Left){
                                 Stack.push(n->Left);
                         }
-                }
+        	}
 		std::cout << "}";
 	}
 

@@ -1,0 +1,10 @@
+#!/bin/bash
+reset;
+sudo cmake ..; 
+sudo make; 
+echo Program Built;
+sudo ./test-tree > tree.dot;
+echo Program Run;
+sudo dot -Tps tree.dot -o tree.pdf
+echo PDF Generated
+
