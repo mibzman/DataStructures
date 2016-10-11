@@ -41,45 +41,53 @@ struct Tree { //the non-balanced tree
                         return;
                 }
 
-		Head = t.Head;
+		Head = new Node<T>(*t.Head);
 		Node<T>* r = Head;
                 Node<T>* n;
 		Node<T>* temp;
                 std::stack<Node<T>*> Stack;
 		std::stack<Node<T>*> twoChild;
 
-                Stack.push(t.Head);
+                 if (t.Head->Left){
+                        Stack.push(t.Head->Left);
+                 }
+                 if (t.Head->Right){
+                        Stack.push(t.Head->Right);
+                 }
+
+		twoChild.push(Head);
                 while(!Stack.empty()){
+			
                         n = Stack.top();
-			//do visit                        
-			//insert(n);
-			if (r->Value < n->Value){
-				r->Left = n;
-				temp = r->Left;
+			//do visit 
+			Node<T>* newNode = new Node<T>(*n);
+			if (r->Value > n->Value){
+				r->Left = newNode;
 			}else{
-				r->Right = n;
-				temp = r->Right;
+				r->Right = newNode;
 			}
-			temp->Parent = r;
-			r = temp;	
+			newNode->Parent = r;
+			r = newNode;
+
 			if (n->Left && n->Right){
 				twoChild.push(r);
 			}else if (!n->Left && !n->Right){
 				//this resets r to the last node with two children so that our traversial of the new tree moves in step with our pre-order traversial
-				r = twoChild.top();
-				twoChild.pop();
+				if(!twoChild.empty()){
+					r = twoChild.top();
+                                	twoChild.pop();
+				}
 			}
 
- 
+ 			
                         Stack.pop();
-                        if (n->Right){
-                                Stack.push(n->Right);
-                        }
                         if (n->Left){
                                 Stack.push(n->Left);
                         }
+                        if (n->Right){
+                                Stack.push(n->Right);
+                        }
                 }
-
         }
 
 	Tree & operator=(const Tree & t){
@@ -191,26 +199,26 @@ struct Tree { //the non-balanced tree
 		Node<T>* n;
                 std::stack<Node<T>*> Stack;
 		int counter = 0;
+		int otherCounter = 0;
 
                 Stack.push(Head);
                 while(!Stack.empty()){
                         n = Stack.top();
                         //do visit
-			
 			if (!n->Parent){
 				std::cout << "HEAD" << "->" << n->Value << ";" << std::endl;
 			}else{
-				std::cout << n->Parent->Value << "->" << n->Value << ";" << std::endl;  
+				std::cout << n->Parent->Value <<  "->" << n->Value  << ";" << std::endl;  
 			}
 			if (!n->Left) {
 				std::cout << n->Value << "->" << "Leftnull" << counter << ";" << std::endl;
-			counter++;
+			
 			}
 			if (!n->Right) {
-                                std::cout << n->Value << "->" << "Righttnull" << counter << ";" << std::endl;
-			counter++;
+                                std::cout << n->Value <<"->" << "Righttnull" << counter << ";" << std::endl;
+			
                         }
-
+			counter++;
 
                         Stack.pop();
                         if (n->Right){

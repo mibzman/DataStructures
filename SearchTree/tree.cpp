@@ -56,7 +56,7 @@ Tree<int>* TestFind(){
 	Tree<int>* q = new Tree<int>(); //it worked!
 	Node<int>* goodHead = new Node<int>(666, nullptr, nullptr, nullptr);
 	q->Head = goodHead;
-	return q;
+	return t;
 }
 
 
@@ -67,14 +67,18 @@ Tree<int>* TestCopConstruct(){
                 t->insert(values[i]);
         }
         
-	//Tree<int>* alsot = new Tree<int>(*t);
+	Tree<int>* alsot = new Tree<int>(*t);
 	//t->print();
 	//alsot->print();
         
 	Tree<int>* q = new Tree<int>(); //it worked!
         Node<int>* goodHead = new Node<int>(666, nullptr, nullptr, nullptr);
         q->Head = goodHead;
-        return q;
+        return alsot;
+}
+
+Tree<int> TestCopAssign(){
+
 }
 
 int main(){
@@ -83,9 +87,7 @@ int main(){
 	t = TestDelete();
 	t = TestFind();
 	t = TestCopConstruct();
-	//std::cout << t->find(10)->Value << std::endl;
 	t->print();
-	
         return 0;
 }
 
