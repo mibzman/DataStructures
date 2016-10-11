@@ -93,10 +93,12 @@ struct Tree { //the non-balanced tree
 	Tree & operator=(const Tree & t){
 		Node<T>* p = Head;
                 Node<T>* ThisParent;
-                while (p) {
+                while (Head) {
+			//erase(Head);
+			
                         if (!p->Left && !p->Right){
                                 ThisParent = p->Parent;
-                                delete p;
+                                erase(p);
                                 p = ThisParent;
                         } else if (!p->Left) {
                                 p = p->Right;
@@ -238,6 +240,11 @@ struct Tree { //the non-balanced tree
 		while (p) {
 			if (!p->Left && !p->Right){
 				ThisParent = p->Parent;
+				if(ThisParent->Left == p){
+					ThisParent->Left = nullptr;
+				}else{
+					ThisParent->Right = nullptr;
+				}
 				delete p;
 				p = ThisParent;
 			} else if (!p->Left) {
