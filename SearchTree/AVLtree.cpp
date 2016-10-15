@@ -5,9 +5,10 @@
 
 AVLTree<int>* TestInsert(){
 	AVLTree<int>* t = new AVLTree<int>();
-	std::vector<int> values = {50, 25, 10,9,8,7,6,5,4,3};
+	std::vector<int> values = {50,49,48,47,46,45,44,43,42,41};
         for (int i = 0; i < values.size(); i++){
                 t->insert(values[i]);
+		//t->print();
         }
 	//std::cout<<t->Head->Right->Left->Right->Right->Value;
 //	t->print();
@@ -28,18 +29,63 @@ AVLTree<int>* TestInsert(){
 	return t;
 }
 
-AVLTree<int>* TestDelete() {
+AVLTree<int>* TestLeftRotate(){
 	AVLTree<int>* t = new AVLTree<int>();
-        t->insert(50);
-        t->insert(25);
-        t->insert(100);
-        t->insert(10);
-	t->insert(75);
-	t->insert(76);
-	t->insert(74);
+        /*std::vector<int> values = {50, 51, 52,9,8,7,6,5,4,3};
+        for (int i = 0; i < values.size(); i++){
+                t->insert(values[i]);
+        }*/
+        
+	t->insert(50);
+        t->insert(51);
+        t->insert(48);
+        t->insert(47);
+
 	//t->print();
 
-	t->erase(t->Head->Right->Left->Right);
+	t->rotateLeft(t->Head, t->Head->Right);
+
+
+        return t;
+
+}
+
+
+AVLTree<int>* TestRightRotate(){
+        AVLTree<int>* t = new AVLTree<int>();
+        /*std::vector<int> values = {50, 51, 52,9,8,7,6,5,4,3};
+        for (int i = 0; i < values.size(); i++){
+                t->insert(values[i]);
+        }*/
+
+        t->insert(50);
+        t->insert(51);
+        t->insert(48);
+        t->insert(47);
+
+        //t->print();
+
+        t->rotateRight(t->Head, t->Head->Left);
+
+
+        return t;
+
+}
+
+
+AVLTree<int>* TestDelete() {
+	AVLTree<int>* t = new AVLTree<int>();
+        std::vector<int> values = {50,49,48,47,46,45,44,43,42,41};
+        for (int i = 0; i < values.size(); i++){
+                t->insert(values[i]);
+                //t->print();
+        }
+ 
+
+	AVLNode<int>* q = t->find(44);
+	t->print();
+	t->erase(q);
+	//t->print();
 	return t;
 }
 
@@ -57,7 +103,7 @@ AVLTree<int>* TestFind(){
 	AVLTree<int>* q = new AVLTree<int>(); //it worked!
 	AVLNode<int>* goodHead = new AVLNode<int>(666, nullptr, nullptr, nullptr);
 	q->Head = goodHead;
-	return t;
+	return q;
 }
 
 
@@ -102,7 +148,7 @@ AVLTree<int>* TestCopAssign(){
         return alsot;
 }
 
-
+/*
 AVLTree<int>* TestHeight(){
         AVLTree<int>* t = new AVLTree<int>();
         std::vector<int> values = {50, 25, 100, 10, 75, 76, 74};
@@ -118,15 +164,19 @@ AVLTree<int>* TestHeight(){
         }
         return t;
 }
+*/
 
 int main(){
 	AVLTree<int>* t;
         t = TestInsert();
-/*	t = TestDelete();
-	t = TestFind();
-	t = TestCopConstruct();
+	t = TestLeftRotate();
+	t = TestRightRotate();
+	t = TestDelete();
+
+	//t = TestFind();
+	/*t = TestCopConstruct();
 	t = TestCopAssign();
-	t = TestHeight();*/
+	//t = TestHeight();*/
 	t->print();
         return 0;
 }

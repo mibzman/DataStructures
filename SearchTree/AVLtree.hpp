@@ -23,7 +23,7 @@ struct AVLNode {
 		Height = N.Height;
 		return *this;
 	}
-	
+/*	
 	int SubTreeHeight()//I don't use this, but it's cool
 	{
 		if (this == nullptr){
@@ -54,6 +54,7 @@ struct AVLNode {
 	        }
 	    }
 	}
+*/
 };
 
 template<typename T>
@@ -77,7 +78,7 @@ struct AVLTree {
 		Head = new AVLNode<T>(*t.Head);
 		AVLNode<T>* r = Head;
                 AVLNode<T>* n;
-		AVLNode<T>* temp;
+		
                 std::stack<AVLNode<T>*> Stack;
 		std::stack<AVLNode<T>*> twoChild;
 
@@ -185,14 +186,22 @@ struct AVLTree {
 		}else{
 			ThisParent->Right = newAVLNode;
 		}
+		if(!newAVLNode){
+			//breakpoint
+		}
 		balance(newAVLNode);
 	}
 
+	
+
+
 	void erase(AVLNode<T>* k){
 		AVLNode<T>* p = k->Parent;
+		AVLNode<T>* parent = k->Parent;
 		if (k->Left && k->Right){
 			AVLNode<T>* r = successor(k);
 			k->Value = r->Value;
+			parent = r;
 			erase(r); //r could have a right child
 		}else if(k->Left){
 			if (p->Left == k){
@@ -218,11 +227,12 @@ struct AVLTree {
                        }
 			delete k;
 		}
+		balance(parent);
 	}
 
 	AVLNode<T>* successor(AVLNode<T>* k){
 		AVLNode<T>* p = k->Right;
-		AVLNode<T>* ou                                Stack.push(n->Right)://gist.github.com/mibzman/d5bc6d29930f500c949a17bb29d6fc8btput;
+		AVLNode<T>* output;
 		while (p){
 			output = p;
 			p = p->Left;
@@ -258,6 +268,7 @@ struct AVLTree {
 
                         Stack.pop();
                         if (n->Right){
+				 Stack.push(n->Right);
                         }
                         if (n->Left){
                                 Stack.push(n->Left);
@@ -280,6 +291,9 @@ struct AVLTree {
 
 	//assumes: https://upload.wikimedia.org/wikipedia/commons/2/23/Tree_rotation.png
 	void rotateRight(AVLNode<T>* q, AVLNode<T>* p){
+		if (Head == q){
+			Head = p;
+		}
 		if (q->Parent){
 			AVLNode<T>* superRoot = q->Parent;
 			if(superRoot->Left == q){
@@ -301,7 +315,12 @@ struct AVLTree {
 	}
 
 	void rotateLeft(AVLNode<T>* p, AVLNode<T>* q){
-                if (p->Parent){
+		if (Head == p){
+                        Head = q;
+                }
+
+                AVLNode<T> debug = *p;
+		if (p->Parent){
                         AVLNode<T>* superRoot = p->Parent;
                         if(superRoot->Left == p){
                                 stitch(superRoot, q, true);
@@ -330,6 +349,7 @@ struct AVLTree {
 	}
 
 	void balance(AVLNode<T>* p){//where p is a newly inserted node
+		
 		if(!p){
 			//breakpoint
 		}
@@ -338,35 +358,46 @@ struct AVLTree {
 			return;
 		}
 		//std::cout<<"balancing";
-
+		
 		int balance;
 		AVLNode<T>* q = p->Parent;
 		while(q){
-			AVLNode<T> debug = *q;
+			if(!p){
+				break;
+			}
+			//std::cout << " " << p->Value;
+			
+			//AVLNode<T> debug = *q;
 			AVLNode<T> debug2 = *p;
-			q->Height = std::max(getHeight(q->Left), getHeight(q->Right)) + 1;
+			
+			p->Height = std::max(getHeight(p->Left), getHeight(p->Right)) + 1;
 			//std::cout << p->Height;
-			balance = getHeight(q->Left) - getHeight(q->Right);
-			if (balance == -2){
-				//std::cout<< "rotate right";
-				rotateRight(q, p);
-				balance = 0;
-				AVLNode<T>* temp = q;
-				q = p;
-				p = temp;
+			balance = getHeight(p->Right) - getHeight(p->Left);
+			
+			if (balance <= -2){
+			//	std::cout<< "rotate right";
+				rotateRight(p, p->Left);
+				//balance = 0;
+				//AVLNode<T>* temp = q;
+				q = p->Parent;
+				p = p->Right;
 			}
-			if (balance == 2){
+			if (balance >= 2){
 				//std::cout<< "rotate left";
-				rotateLeft(q, p);
-                                balance = 0;
-				AVLNode<T>* temp = q;
-                                q = p;
-                                p = temp;
+				rotateLeft(p, p->Right);
+                               // balance = 0;
+				//AVLNode<T>* temp = q;
+                                q = p->Parent;
+                                p = p->Left;
 			}
-
-			p = p->Parent;
-			q = q->Parent;
+			if(p){
+				p = q->Parent;
+			}
+			if(q){
+				q = q->Parent;
+			}
 		}
+		//std::cout << std::endl;
 	}
 
 
