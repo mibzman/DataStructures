@@ -152,6 +152,10 @@ struct Tree { //the non-balanced tree
 		}else{
 			ThisParent->Right = newNode;
 		}
+		if (!newNode){
+			//breakpoint here!
+			Node<T> debug = *newNode;
+		}
 	}
 
 	void erase(Node<T>* k){
