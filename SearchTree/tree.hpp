@@ -30,11 +30,8 @@ struct Tree { //the non-balanced tree
 	Tree()
 	:Head(nullptr){}
 
-	/*
-	Tree(T n){
-		Head = new Node<T>(n, nullptr, nullptr, nullptr);
-	}*/
-
+	
+	//for the 
 	 Tree(const Tree<T> & t){
                 if (t.Head == nullptr){
 			Head = nullptr;
