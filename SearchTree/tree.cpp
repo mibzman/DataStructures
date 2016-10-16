@@ -1,4 +1,5 @@
 #include "tree.hpp"
+//#include "benchmark.hpp"
 #include<iostream>
 #include <vector>
 #include <string>
@@ -6,9 +7,9 @@
 Tree<int>* TestInsert(){
 	Tree<int>* t = new Tree<int>();
 	t->insert(50);
-	t->insert(25);
-	t->insert(100);
-	t->insert(10);
+	t->insert(51);
+	t->insert(52);
+	t->insert(53);
 	
 //	t->print();
 
@@ -102,6 +103,7 @@ Tree<int>* TestCopAssign(){
 }
 
 
+
 int main(){
 	Tree<int>* t;
         t = TestInsert();
@@ -109,7 +111,7 @@ int main(){
 	t = TestFind();
 	t = TestCopConstruct();
 	t = TestCopAssign();
-	t->print();
+	//t->print();
         return 0;
 }
 

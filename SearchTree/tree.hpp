@@ -31,7 +31,12 @@ struct Tree { //the non-balanced tree
 	:Head(nullptr){}
 
 	
-	//for the 
+	/*
+	average case: O(n)
+	worst case: O(n)
+	they are the same because no matter what we have to traverse the entire tree
+	all of the operations with the main traversial stack and the 'twoChild' stack are constant time because they are pointer operations
+	*/
 	 Tree(const Tree<T> & t){
                 if (t.Head == nullptr){
 			Head = nullptr;
@@ -86,12 +91,16 @@ struct Tree { //the non-balanced tree
                         }
                 }
         }
-
+	/*
+	average case: O(k+n)
+	worst case: O(k+n)
+	where k is the size of the old tree and n is the size of the new tree
+	again we have to traverse the entire tree in order to actuially delete it and copy
+	*/
 	Tree & operator=(const Tree & t){
 		Node<T>* p = Head;
                 Node<T>* ThisParent;
                 while (Head) {
-			//erase(Head);
 			
                         if (!p->Left && !p->Right){
                                 ThisParent = p->Parent;
@@ -109,7 +118,12 @@ struct Tree { //the non-balanced tree
 
 	}
 
-
+	/*
+	average case: O(log(n)) 
+	worst case: O(n)
+	the average case arises when we have a nicely destributed set of values
+	the worst case is if we have a sorted list inputed
+	*/
 	Node<T>* find(T val) {
 		Node<T>* p = Head;
 		while(p) {
@@ -123,7 +137,13 @@ struct Tree { //the non-balanced tree
                 }
 		return p;
 	}	
-
+	
+	/*
+        average case: O(log(n))
+        worst case: O(n)
+        the average case arises when we have a nicely destributed set of value.  
+        the worst case is if we have a sorted list inputed and we are inserting at the bottom
+        */
 	void insert(T val) {
 		if (Head == nullptr){
 			Node<T>* temp = new Node<T>(val, nullptr, nullptr, nullptr);
@@ -155,6 +175,12 @@ struct Tree { //the non-balanced tree
 		}
 	}
 
+	/*
+        average case: O(1)
+        worst case: O(log(n))
+        the average case arises when we are deleting a node with zero or one children
+        the worst case is if we have a large set and we are deleting the head and have to traverse all the way to the bottom to get the successor
+        */
 	void erase(Node<T>* k){
 		Node<T>* p = k->Parent;
 		if (k->Left && k->Right){
@@ -186,7 +212,7 @@ struct Tree { //the non-balanced tree
 			delete k;
 		}
 	}
-
+	//at worst O(log(n)), see above
 	Node<T>* successor(Node<T>* k){
 		Node<T>* p = k->Right;
 		Node<T>* output;
@@ -197,6 +223,7 @@ struct Tree { //the non-balanced tree
 		return output;
 	}
 
+	//O(n)
 	void print(){
 		std::cout << "digraph G {" << std::endl;
 		Node<T>* n;
@@ -234,7 +261,11 @@ struct Tree { //the non-balanced tree
 		std::cout << "}";
 	}
 
-
+	/*
+	average: O(n)
+	worst case: O(n)
+	again, we have to traverse the whole set
+	*/
 	~Tree(){
 		Node<T>* p = Head;
 		Node<T>* ThisParent;

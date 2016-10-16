@@ -23,38 +23,7 @@ struct AVLNode {
 		Height = N.Height;
 		return *this;
 	}
-/*	
-	int SubTreeHeight()//I don't use this, but it's cool
-	{
-		if (this == nullptr){
-	 		return 0;
-		}
-		std::queue<AVLNode<T> *> q;
-	 
-		q.push(this);
-		int height = 0;
-	 
-		while (1){
-	        int nodeCount = q.size();
-	        if (nodeCount == 0){
-	        	return height;
-		}	 
-	        height++;
-	
-	        while (nodeCount > 0){
-	        	AVLNode<T>* node = q.front();
-	        	q.pop();
-	        	if (node->Left != nullptr){
-	                	q.push(node->Left);
-			}
-	        	if (node->Right != nullptr){
-	                	q.push(node->Right);
-			}
-        		nodeCount--;
-	        }
-	    }
-	}
-*/
+
 };
 
 template<typename T>
@@ -63,12 +32,12 @@ struct AVLTree {
 
 	AVLTree()
 	:Head(nullptr){}
-
+	
 	/*
-	AVLTree(T n){
-		Head = new AVLNode<T>(n, nullptr, nullptr, nullptr);
-	}*/
-
+        average: O(n)
+        worst case: O(n)
+        again, we have to traverse the whole set
+        */
 	 AVLTree(const AVLTree<T> & t){
                 if (t.Head == nullptr){
 			Head = nullptr;
@@ -124,11 +93,15 @@ struct AVLTree {
                 }
         }
 
+	/*
+        average: O(k+n)
+        worst case: O(k+n)
+        again, we have to traverse the whole set of both the old and the new tres
+        */
 	AVLTree & operator=(const AVLTree & t){
 		AVLNode<T>* p = Head;
                 AVLNode<T>* ThisParent;
                 while (Head) {
-			//erase(Head);
 			
                         if (!p->Left && !p->Right){
                                 ThisParent = p->Parent;
@@ -146,7 +119,11 @@ struct AVLTree {
 
 	}
 
-
+	/*
+        average: O(log(n))
+        worst case: O(log(n))
+        since the avl tree is always balanced we reduce the search time for all cases
+        */
 	AVLNode<T>* find(T val) {
 		AVLNode<T>* p = Head;
 		while(p) {
@@ -161,6 +138,14 @@ struct AVLTree {
 		return p;
 	}	
 
+
+	/*
+	average case: O(2log(n))
+	worst case: O(2.5log(n))
+	we have the same comlexity for both since the tree is always balanced.  
+	on average we have to work our way down to find the insertion point and then work our way back up and rebalance.
+	the actual rotation is a constant time operation, but in the worst case we would have to rotate every other node which would be O(1/2log(n))
+	*/
 	void insert(T val) {
 		if (Head == nullptr){
 			AVLNode<T>* temp = new AVLNode<T>(val, nullptr, nullptr, nullptr);
@@ -194,7 +179,13 @@ struct AVLTree {
 
 	
 
-
+	 /*
+        average case: O(log)n))
+        worst case: O(2log(n))
+        the average case arises when we are deleting a node with zero or one children
+        the worst case is if we have a large set and we are deleting the head and have to traverse all the way to the bottom to get the successor,
+	and then all the way back up to rebalance 
+        */
 	void erase(AVLNode<T>* k){
 		AVLNode<T>* p = k->Parent;
 		AVLNode<T>* parent = k->Parent;
@@ -347,7 +338,7 @@ struct AVLTree {
 		}
 		return 0;
 	}
-
+	
 	void balance(AVLNode<T>* p){//where p is a newly inserted node
 		
 		if(!p){
