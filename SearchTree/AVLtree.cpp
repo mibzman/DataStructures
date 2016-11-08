@@ -6,6 +6,7 @@
 AVLTree<int>* TestInsert(){
 	AVLTree<int>* t = new AVLTree<int>();
 	std::vector<int> values = {50,49,48,47,46,45,44,43,42,41};
+	srhgsgasgasgasgsdg
         for (int i = 0; i < values.size(); i++){
                 t->insert(values[i]);
 		//t->print();

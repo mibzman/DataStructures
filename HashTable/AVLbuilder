@@ -1,0 +1,18 @@
+#!/bin/bash
+reset;
+sudo cmake ..; 
+sudo make; 
+echo -- Program Built;
+sudo ./test-AVLtree > AVLtree.dot;
+if [ $? -eq 139 ]; 
+then
+    echo "-- Program crashed!";
+    gdb ./test-AVLtree;
+
+else
+	echo -- Program Run;
+	sudo dot -Tps AVLtree.dot -o AVLtree.pdf;
+	echo -- PDF Generated
+	xdg-open AVLtree.pdf
+fi
+
