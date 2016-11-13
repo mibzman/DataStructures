@@ -104,13 +104,17 @@ struct SepHash {//a seperate chained hash table
 		for (int i = 0; i < oldTable.size(); i++){
 			Bucket thisBucket = oldTable[i];
 			for (int i = 0; i < thisBucket.Size; i++){
-				int newHash = Hash(thisBucket.List[i]);
-				Table[newHash].Add(thisBucket.List[i]);
-				KeyCount++;
+				insert(Hash(thisBucket.List[i]));
+				//int newHash = Hash(thisBucket.List[i]);
+				//Table[newHash].Add(thisBucket.List[i]);
+				//KeyCount++;
 			}
 		}
 	}
 	
-	
+	int* find(int val){
+		int hash = Hash(val);
+		return Table[hash].Find(val);
+	}
 
 };

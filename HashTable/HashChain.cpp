@@ -112,12 +112,31 @@ void TestCopyAssign(){
         }
 }
 
+void TestTableFind(){
+	SepHash table;
+        std::vector<int> values = {50, 25, 100, 10, 75, 76, 74, 4, 99};
+        for (int i = 0; i < values.size(); i++){
+                table.insert(values[i]);
+        }
+
+	int* found = table.find(25);
+
+	if (!found){
+                std::cout << "TestEnd broke" << std::endl;
+        }
+
+        if (*found != 25){
+                std::cout << "TestEnd broke" << std::endl;
+        }
+}
+
 
 void SepHashTest(){
 	TestInsert();
 	TestRehash();
 	TestCopyConstruct();
 	TestCopyAssign();
+	TestTableFind();
 }
 
 int main(){

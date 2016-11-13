@@ -6,7 +6,7 @@ enable_testing()
 set(CMAKE_CXX_FLAGS "-std=c++11")
 
 add_executable(test-HashChain HashChain.cpp)
-#add_executable(test-HashOpen HashOpen.cpp)
+add_executable(test-HashOpen HashOpen.cpp)
 #add_executable(test-vector-binary vector-binary.cpp)
 #add_executable(test-vector-sort vector-sort.cpp)
 macro(add_printout)
