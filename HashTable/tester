@@ -1,0 +1,20 @@
+#!/bin/bash
+reset;
+sudo cmake ..; 
+sudo make; 
+echo -- Program Built;
+echo -- ChainFind;
+sudo ./test-ChainFind | tee ChainTestFind.txt;
+echo -- Chain Insert;
+sudo ./test-ChainInsert | tee ChainTestInsert.txt;
+echo -- Open Find;
+sudo ./test-OpenFind | tee OpenTestFind.txt;
+echo -- Open Insert;
+sudo ./test-OpenInsert | tee OpenTestInsert.txt;
+echo -- Moving;
+cp ChainTestFind.txt ..;
+cp  ChainTestInsert.txt ..;
+cp  OpenTestFind.txt ..;
+cp OpenTestInsert.txt ..;
+(cd ..; git add *;)
+echo -- Added to Git, please Commit and Push;
