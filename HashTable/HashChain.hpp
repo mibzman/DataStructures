@@ -11,7 +11,6 @@ struct Bucket {
 		Size++;
 	}
 	
-	//TODO: implement me!
 	int* Find(int val){
 		int* output;
 		for (int i = 0; i < Size; i++){
@@ -21,16 +20,6 @@ struct Bucket {
 			}
 		}
 		return nullptr;
-		/*
-		int* otuput = List.begin();
-		while(output < List.end()){
-			if (val == *output){
-				return output;
-			}
-			output++;
-		}
-		return nullptr;
-		*/
 	}
 
 
@@ -104,10 +93,10 @@ struct SepHash {//a seperate chained hash table
 		for (int i = 0; i < oldTable.size(); i++){
 			Bucket thisBucket = oldTable[i];
 			for (int i = 0; i < thisBucket.Size; i++){
-				insert(Hash(thisBucket.List[i]));
-				//int newHash = Hash(thisBucket.List[i]);
-				//Table[newHash].Add(thisBucket.List[i]);
-				//KeyCount++;
+				//insert(thisBucket.List[i]);
+				int newHash = Hash(thisBucket.List[i]);
+				Table[newHash].Add(thisBucket.List[i]);
+				KeyCount++;
 			}
 		}
 	}
