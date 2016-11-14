@@ -19,6 +19,16 @@ void TestFind(){
       //auto iter = linear_search(seq, num); // Find the insertion point
       seq.push_back(i);
     }
+
+    for (int i = n; i < n *2; ++i) {
+      std::uniform_int_distribution<int> rand(0, i);
+
+      //int num = rand(prbg);                // Generate a random number
+      //hash->insert(i);
+      //auto iter = linear_search(seq, num); // Find the insertion point
+      seq.push_back(i);
+    }
+
     auto start = std::chrono::system_clock::now();
     for (int f = 0; f < seq.size(); f++){
         int* test = hash->find(f);

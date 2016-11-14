@@ -1,4 +1,5 @@
 #!/bin/bash
+#note to self: next time make these all csv's
 reset;
 sudo cmake ..; 
 sudo make; 
