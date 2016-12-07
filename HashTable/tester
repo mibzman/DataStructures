@@ -1,21 +1,20 @@
 #!/bin/bash
-#note to self: next time make these all csv's
 reset;
 sudo cmake ..; 
 sudo make; 
 echo -- Program Built;
 echo -- ChainFind;
-sudo ./test-ChainFind | tee ChainTestFind.txt;
+sudo ./test-ChainFind | tee ChainTestFind.csv;
 echo -- Chain Insert;
-sudo ./test-ChainInsert | tee ChainTestInsert.txt;
+sudo ./test-ChainInsert | tee ChainTestInsert.csv;
 echo -- Open Find;
-sudo ./test-OpenFind | tee OpenTestFind.txt;
+sudo ./test-OpenFind | tee OpenTestFind.csv;
 echo -- Open Insert;
-sudo ./test-OpenInsert | tee OpenTestInsert.txt;
+sudo ./test-OpenInsert | tee OpenTestInsert.csv;
 echo -- Moving;
-cp ChainTestFind.txt ..;
-cp  ChainTestInsert.txt ..;
-cp  OpenTestFind.txt ..;
-cp OpenTestInsert.txt ..;
+cp ChainTestFind.csv ..;
+cp  ChainTestInsert.csv ..;
+cp  OpenTestFind.csv ..;
+cp OpenTestInsert.csv ..;
 (cd ..; git add *;)
 echo -- Added to Git, please Commit and Push;
