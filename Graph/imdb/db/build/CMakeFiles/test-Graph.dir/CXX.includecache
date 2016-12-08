@@ -1,0 +1,26 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/class/sb205/Documents/DataStructures/Graph/imdb/db/Graph.cpp
+Graph.hpp
+/home/class/sb205/Documents/DataStructures/Graph/imdb/db/Graph.hpp
+stdlib.h
+-
+time.h
+-
+iostream
+-
+vector
+-
+
+/home/class/sb205/Documents/DataStructures/Graph/imdb/db/Graph.hpp
+string
+-
+vector
+-
+

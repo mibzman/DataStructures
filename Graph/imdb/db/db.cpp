@@ -13,11 +13,11 @@
 
 database::database() {
   // Pre-allocate a bunch of storage for these things.
-  movies.reserve(4 << 5);
-  actors.reserve(4 << 5);
-  roles.reserve(32 << 5);
-  movie_lookup.reserve(4 << 5);
-  actor_lookup.reserve(4 << 5);
+  movies.reserve(4 << 20);
+  actors.reserve(4 << 20);
+  roles.reserve(32 << 20);
+  movie_lookup.reserve(4 << 20);
+  actor_lookup.reserve(4 << 20);
 }
 
 // Adds a movie to the movie table.

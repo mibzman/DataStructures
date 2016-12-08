@@ -1,0 +1,19 @@
+reset;
+cmake ..; 
+make;
+if [ $? -eq 0 ];
+then
+    echo -- Program Built;
+        ./test-Graph;
+        if [ $? -eq 139 ];
+        then
+            echo "-- Program crashed!";
+            gdb ./test-Graph;
+
+        else
+                echo -- Program Run;
+        fi
+
+else 
+	echo "-- Program Failed to Build!";       
+fi

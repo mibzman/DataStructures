@@ -1,1 +1,1 @@
-/usr/bin/c++    -std=c++11   CMakeFiles/db.dir/table.cpp.o CMakeFiles/db.dir/movies.cpp.o CMakeFiles/db.dir/actors.cpp.o CMakeFiles/db.dir/roles.cpp.o CMakeFiles/db.dir/db.cpp.o  -o db -rdynamic 
+/usr/bin/c++   -std=c++11    CMakeFiles/db.dir/table.o CMakeFiles/db.dir/movies.o CMakeFiles/db.dir/actors.o CMakeFiles/db.dir/roles.o CMakeFiles/db.dir/db.o  -o db -rdynamic 

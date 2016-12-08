@@ -1,14 +1,14 @@
-file(REMOVE_RECURSE
-  "CMakeFiles/db.dir/table.cpp.o"
-  "CMakeFiles/db.dir/movies.cpp.o"
-  "CMakeFiles/db.dir/actors.cpp.o"
-  "CMakeFiles/db.dir/roles.cpp.o"
-  "CMakeFiles/db.dir/db.cpp.o"
+FILE(REMOVE_RECURSE
+  "CMakeFiles/db.dir/table.o"
+  "CMakeFiles/db.dir/movies.o"
+  "CMakeFiles/db.dir/actors.o"
+  "CMakeFiles/db.dir/roles.o"
+  "CMakeFiles/db.dir/db.o"
   "db.pdb"
   "db"
 )
 
 # Per-language clean rules from dependency scanning.
-foreach(lang CXX)
-  include(CMakeFiles/db.dir/cmake_clean_${lang}.cmake OPTIONAL)
-endforeach()
+FOREACH(lang CXX)
+  INCLUDE(CMakeFiles/db.dir/cmake_clean_${lang}.cmake OPTIONAL)
+ENDFOREACH(lang)
