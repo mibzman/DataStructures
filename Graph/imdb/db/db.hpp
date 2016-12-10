@@ -20,7 +20,14 @@ struct database
 
   int find_actor(const std::string& name);
   int add_role(const char* act, const char* mov, const char* info);
+
+
+  std::vector<int> get_roles(const std::string& name);
+  std::vector<int> get_actors(const std::string& name);
+
   
+  std::vector<int> BFS(const std::string& start);
+ 
   // Storage for movies and actors.
   movie_table movies;
   actor_table actors;

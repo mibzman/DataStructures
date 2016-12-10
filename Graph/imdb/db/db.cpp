@@ -8,6 +8,7 @@
 
 #include <cassert>
 #include <iostream>
+#include <queue>
 
 
 
@@ -73,6 +74,30 @@ database::add_role(const char* act, const char* mov, const char* info) {
   return id;
 }
 
+std::vector<int>
+database::get_roles(const std::string& name) {
+  int a = actor_lookup.find(name.c_str());
+  assert(a != -1);
+  return actors[a].roles;
+}
+
+std::vector<int>
+database::get_actors(const std::string& name) {
+  int a = movie_lookup.find(name.c_str());
+  assert(a != -1);
+  return movies[a].roles;
+}
+
+struct Vertex {
+  int index;
+  bool isActor;
+
+  Vertex() = default;
+
+  Vertex(int i, bool a)
+  :index(i), isActor(a){}
+};
+
 
 
 struct movie_visitor
@@ -110,9 +135,50 @@ struct actor_visitor
   database& db;
 };
 
+std::vector<int>
+database::BFS(const std::string& start){
+  int target = find_actor(start.c_str());
+  std::vector<int> visitedMovies(movies.size(), -1);
+  std::vector<int> visitedActors(actors.size(), -1);
+
+  Vertex current;
+  std::queue<Vertex> q;
+  q.push(Vertex(target, true));
+  visitedActors[target] = 0;
+  int actorError = 0;
+  int actorSuccess = 0;
+  int movieError = 0;
+  int movieSuccess = 0;
+
+  q.push(Vertex(target, true));
+    while (!q.empty()){
+      current = q.front();
+      q.pop();
+      if (current.isActor){ 
+        for (int i : actors[current.index].roles) {
+          int thisMovie = roles[i].movie;
+          if (visitedMovies[thisMovie] == -1){
+            visitedMovies[thisMovie] = visitedActors[current.index] +1 ;
+            q.push(Vertex(thisMovie, false));
+          }
+        }
+      }else{
+        for (int j : movies[current.index].roles) {
+          int thisActor = roles[j].actor;
+          if(visitedActors[thisActor] == -1){
+            visitedActors[thisActor] = visitedMovies[current.index] +1;
+            q.push(Vertex(thisActor, true));
+          }
+        }
+      }
+  }
+  return visitedActors;
+}
+
 
 int
 main(int argc, char* argv[]) {
+  // Emulate a simple shell.
   database db;
 
   // Actually parse the content.
@@ -133,25 +199,34 @@ main(int argc, char* argv[]) {
   actress_parser.parse();
   std::cout << "* loaded " << db.actors.size() << " actors\n";
 
-  // Diagnose lookup errors. These happens when an actor row refers
-  // to a movie title that was not parsed in the movie data set.
   if (db.movie_lookup_errors)
     std::cerr << "! " << db.movie_lookup_errors << " movie lookup errors\n";
-
-  // Get the target actor (Kevin Bacon).
-  const char* kb = "Bacon, Kevin (I)";
-  int target = db.find_actor(kb);
-  std::cout << "* index of \"" << kb << "\": " << target << '\n';
-
-  // Emulate a simple shell.
-  while (true) {
-    std::string actor;
-    std::cout << "actor> ";
-    std::getline(std::cin, actor);
-    if (!std::cin || actor == "exit")
+  while(true){      
+    std::cout << "enter target actor" << std::endl << ">";
+      
+    std::string target;
+    std::getline(std::cin, target);
+    if (!std::cin || target == "exit"){
       break;
-    int source = db.find_actor(actor);
-    std::cout << "* index of \"" << actor << "\": " << source << '\n';
-  }
+    }
+    if (db.find_actor(target) == -1){
+      std::cout << "actor does not exist" << std::endl;
+      continue;
+    }
+    std::vector<int> results = db.BFS(target);
 
+    while (true) {
+      std::string actor;
+      std::cout << "enter actor" << std::endl << ">";
+      std::getline(std::cin, actor);
+      if (!std::cin || actor == "back")
+        break;
+      int actorNum = db.find_actor(actor);
+      if (actorNum == -1){
+        std::cout << "actor does not exist" << std::endl;
+        continue;
+      }          
+      std::cout << actor << " is " << results[actorNum] /2 << " degrees of seperation from " << target << std::endl;
+    }
+  }  
 }
