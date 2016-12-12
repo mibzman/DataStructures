@@ -73,21 +73,6 @@ database::add_role(const char* act, const char* mov, const char* info) {
   movies[m].add_role(id);
   return id;
 }
-
-std::vector<int>
-database::get_roles(const std::string& name) {
-  int a = actor_lookup.find(name.c_str());
-  assert(a != -1);
-  return actors[a].roles;
-}
-
-std::vector<int>
-database::get_actors(const std::string& name) {
-  int a = movie_lookup.find(name.c_str());
-  assert(a != -1);
-  return movies[a].roles;
-}
-
 struct Vertex {
   int index;
   bool isActor;
@@ -185,9 +170,9 @@ main(int argc, char* argv[]) {
   movie_visitor movie_vis(db);
   actor_visitor actor_vis(db);
 
-  imdb::movie_parser<movie_visitor> movie_parser("./movies.list", movie_vis);
-  imdb::actor_parser<actor_visitor> actor_parser("./actors.list", actor_vis);
-  imdb::actor_parser<actor_visitor> actress_parser("./actresses.list", actor_vis);
+  imdb::movie_parser<movie_visitor> movie_parser("movies.list", movie_vis);
+  imdb::actor_parser<actor_visitor> actor_parser("actors.list", actor_vis);
+  imdb::actor_parser<actor_visitor> actress_parser("actresses.list", actor_vis);
 
   std::cout << "* loading movies\n"; 
   movie_parser.parse();
